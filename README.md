@@ -59,7 +59,3 @@ This script allows you to easily control weather and time on a FiveM server. It 
 Edit the `config.lua` file to set default or fixed values for weather and time.
 
 
-
-
-
-NICHT FERTIG
