@@ -1,9 +1,6 @@
 -- Serverseitige Wetter- und Uhrzeitsteuerung für ESX
 
-local ESX = nil
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-
-local config = require "config"
 
 local stopWeather = false
 local stopTime = false

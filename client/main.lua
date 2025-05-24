@@ -2,6 +2,7 @@
 
 RegisterNetEvent('weatherChanger:setWeather')
 AddEventHandler('weatherChanger:setWeather', function(weatherType)
+    print('[DEBUG][Client] Event weatherChanger:setWeather empfangen mit Typ:', weatherType)
     SetWeatherTypeOvertimePersist(weatherType, 1.0)
     SetWeatherTypeNowPersist(weatherType)
     SetWeatherTypeNow(weatherType)
@@ -11,6 +12,7 @@ end)
 
 RegisterNetEvent('weatherChanger:setTime')
 AddEventHandler('weatherChanger:setTime', function(hour, minute)
+    print('[DEBUG][Client] Event weatherChanger:setTime empfangen mit Zeit:', hour, minute)
     NetworkOverrideClockTime(hour, minute, 0)
     TriggerEvent('chat:addMessage', { args = { '^2Uhrzeit', 'Uhrzeit geändert zu: ' .. hour .. ':' .. string.format('%02d', minute) } })
 end)
