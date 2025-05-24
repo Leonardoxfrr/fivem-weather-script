@@ -1,19 +1,19 @@
 -- config.lua für FiveM Wetter- und Zeitsteuerung
 
-Config = {}
+config = {}
 
 -- Standard Wettertyp (z.B. CLEAR, RAIN, SMOG, EXTRASUNNY, etc.)
-Config.DefaultWeather = "EXTRASUNNY"
+config.DefaultWeather = "EXTRASUNNY"
 
 -- Fixes Wetter aktivieren (true/false)
-Config.FixWeather = false
-Config.FixedWeatherType = "EXTRASUNNY"
+config.FixWeather = false
+config.FixedWeatherType = "EXTRASUNNY"
 
 -- Standard Uhrzeit
-Config.DefaultHour = 12
-Config.DefaultMinute = 0
+config.DefaultHour = 12
+config.DefaultMinute = 0
 
 -- Fixe Uhrzeit aktivieren (true/false)
-Config.FixTime = false
-Config.FixedHour = 12
-Config.FixedMinute = 0
+config.FixTime = false
+config.FixedHour = 12
+config.FixedMinute = 0
