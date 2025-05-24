@@ -15,7 +15,10 @@ AddEventHandler('weatherChanger:setTime', function(hour, minute)
     TriggerEvent('chat:addMessage', { args = { '^2Uhrzeit', 'Uhrzeit geändert zu: ' .. hour .. ':' .. string.format('%02d', minute) } })
 end)
 
--- Command-Suggestions für den Chat (damit die Commands angezeigt werden)
+-- Command suggestions für die Chat-Eingabe registrieren (jetzt im Client!)
+
+-- Diese Funktion muss im client/main.lua stehen, nicht im Server!
+
 TriggerEvent('chat:addSuggestion', '/setweather', 'Setzt das Wetter', {
     { name = 'Wettertyp', help = 'z.B. CLEAR, RAIN, EXTRASUNNY' }
 })

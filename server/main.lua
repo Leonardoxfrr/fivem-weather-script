@@ -37,6 +37,7 @@ AddEventHandler('onResourceStart', function(resourceName)
 end)
 
 RegisterCommand('setweather', function(source, args, rawCommand)
+    print('DEBUG: setweather command received', source, args[1])
     if source == 0 then -- Konsole darf immer
         if not args[1] then print('Bitte gib einen Wettertyp an!') return end
         TriggerClientEvent('weatherChanger:setWeather', -1, args[1])
@@ -60,6 +61,7 @@ RegisterCommand('setweather', function(source, args, rawCommand)
 end)
 
 RegisterCommand('settime', function(source, args, rawCommand)
+    print('DEBUG: settime command received', source, args[1], args[2])
     if source == 0 then -- Konsole darf immer
         if not args[1] or not args[2] then print('Bitte gib Stunde und Minute an!') return end
         TriggerClientEvent('weatherChanger:setTime', -1, tonumber(args[1]), tonumber(args[2]))
