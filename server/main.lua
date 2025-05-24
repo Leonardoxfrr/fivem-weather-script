@@ -1,9 +1,21 @@
--- Serverseitige Wetter- und Uhrzeitsteuerung
+-- Serverseitige Wetter- und Uhrzeitsteuerung für ESX
+
+local ESX = nil
+TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 local config = require "config"
 
 local stopWeather = false
 local stopTime = false
+
+-- Helper: Admin-Check
+local function isAdmin(source)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    if xPlayer and xPlayer.getGroup and xPlayer.getGroup() == 'admin' then
+        return true
+    end
+    return false
+end
 
 -- Fixes Wetter und Zeit beim Serverstart setzen
 AddEventHandler('onResourceStart', function(resourceName)
@@ -22,7 +34,11 @@ AddEventHandler('onResourceStart', function(resourceName)
     end
 end)
 
-RegisterCommand('setweather', function(source, args, rawCommand)
+RegisterCommand('setweather', function(source, args)
+    if not isAdmin(source) then
+        TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Keine Berechtigung!' } })
+        return
+    end
     if stopWeather then
         TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Wetteränderung ist aktuell gesperrt!' } })
         return
@@ -35,7 +51,11 @@ RegisterCommand('setweather', function(source, args, rawCommand)
     TriggerClientEvent('weatherChanger:setWeather', -1, weatherType)
 end)
 
-RegisterCommand('settime', function(source, args, rawCommand)
+RegisterCommand('settime', function(source, args)
+    if not isAdmin(source) then
+        TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Keine Berechtigung!' } })
+        return
+    end
     if stopTime then
         TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Uhrzeitänderung ist aktuell gesperrt!' } })
         return
@@ -49,30 +69,46 @@ RegisterCommand('settime', function(source, args, rawCommand)
     TriggerClientEvent('weatherChanger:setTime', -1, hour, minute)
 end)
 
-RegisterCommand('stopweather', function(source, args, rawCommand)
+RegisterCommand('stopweather', function(source, args)
+    if not isAdmin(source) then
+        TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Keine Berechtigung!' } })
+        return
+    end
     stopWeather = true
     TriggerClientEvent('chat:addMessage', source, { args = { '^2SYSTEM', 'Wetteränderung wurde gestoppt!' } })
 end)
 
-RegisterCommand('stoptime', function(source, args, rawCommand)
+RegisterCommand('stoptime', function(source, args)
+    if not isAdmin(source) then
+        TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Keine Berechtigung!' } })
+        return
+    end
     stopTime = true
     TriggerClientEvent('chat:addMessage', source, { args = { '^2SYSTEM', 'Uhrzeitänderung wurde gestoppt!' } })
 end)
 
-RegisterCommand('resumeweather', function(source, args, rawCommand)
+RegisterCommand('resumeweather', function(source, args)
+    if not isAdmin(source) then
+        TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Keine Berechtigung!' } })
+        return
+    end
     stopWeather = false
     TriggerClientEvent('chat:addMessage', source, { args = { '^2SYSTEM', 'Wetteränderung ist wieder möglich!' } })
 end)
 
-RegisterCommand('resumetime', function(source, args, rawCommand)
+RegisterCommand('resumetime', function(source, args)
+    if not isAdmin(source) then
+        TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Keine Berechtigung!' } })
+        return
+    end
     stopTime = false
     TriggerClientEvent('chat:addMessage', source, { args = { '^2SYSTEM', 'Uhrzeitänderung ist wieder möglich!' } })
 end)
 
 -- FiveM spezifische globale Funktionen deklarieren (nur für Linter/IDE, nicht für FiveM selbst notwendig)
 if false then
-    function AddEventHandler() end
-    function RegisterCommand() end
+    function TriggerEvent() end
     function TriggerClientEvent() end
+    function AddEventHandler() end
     function GetCurrentResourceName() end
 end
